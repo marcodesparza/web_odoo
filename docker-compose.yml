@@ -1,0 +1,35 @@
+version: '2'
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:13
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      #Dejar solo en blanco para dev
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=bn_odoo
+      - POSTGRESQL_DATABASE=bitnami_odoo
+  odoo:
+    image: docker.io/bitnami/odoo:15
+    ports:
+      #cambiar el puerto al que se liga en la maquina, estoy designando un puero diferente para no modificar el nginx
+      - '8069:8069'
+      #normalmente se maneja el puerto 80 para no afectar cuando solo se utiliza la imagen sin nginx
+    volumes:
+      - 'odoo_data:/bitnami/odoo'
+    depends_on:
+      - postgresql
+    environment:
+      #Dejar solo en blanco para dev
+      - ALLOW_EMPTY_PASSWORD=yes
+      - ODOO_DATABASE_HOST=postgresql
+      - ODOO_DATABASE_PORT_NUMBER=5432
+      - ODOO_DATABASE_USER=bn_odoo
+      - ODOO_DATABASE_NAME=bitnami_odoo
+volumes:
+  postgresql_data:
+    driver: local
+  odoo_data:
+    driver: local
+
+
