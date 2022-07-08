@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dumpdb(){
+  docker-compose exec postgresql pg_dump -U postgres postgres --no-owner | gzip -9  > db-backup-$(date +%d-%m-%y).zip
+  }
+dumpdb
