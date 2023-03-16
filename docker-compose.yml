@@ -15,8 +15,17 @@ services:
       #cambiar el puerto al que se liga en la maquina, estoy designando un puero diferente para no modificar el nginx
       - '8069:8069'
       #normalmente se maneja el puerto 80 para no afectar cuando solo se utiliza la imagen sin nginx
+      #lalito modifique esta parte para que peudas agregar el repo en local del enterprise
+      #mira, comienzas creando una carpeta que se va a llamar addons, no te preocupes va a ser en la misma carpeta donde pongas 
+      #este doicumento yamel, 
+      #en la carpeta va a agregar todos los modulos que quieras, no dentro de carpetas
+      #los agregas sueltos, lo hice en rapido sowi.
+      #en esta carpeta agregas el enterprise. y cuando lo corras ya lo va a tener.
+      #asi como cualquier cosa de la oca
+      #ademas puedes modificar codigo
     volumes:
       - 'odoo_data:/bitnami/odoo'
+      - './addons:/bitnami/odoo/addons'
     depends_on:
       - postgresql
     environment:
