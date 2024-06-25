@@ -1,0 +1,37 @@
+services:
+    wyze-bridge:
+        container_name: wyze-bridge
+        restart: unless-stopped
+        image: mrlt8/wyze-bridge:latest
+        ports:
+            - 1935:1935 # RTMP
+            - 8554:8554 # RTSP
+            - 8888:8888 # HLS
+            - 8889:8889 #WebRTC
+            - 8189:8189/udp # WebRTC/ICE
+            - 5000:5000 # WEB-UI
+        environment:
+            # [OPTIONAL] Credentials can be set in the WebUI
+            # API Key and ID can be obtained from the wyze dev portal: 
+            # https://developer-api-console.wyze.com/#/apikey/view
+            - WYZE_EMAIL="esparza@hotmail.com"
+            - WYZE_PASSWORD=Yazmin201002.
+            - API_ID=e0f327a5-d5ca-41a7-b504-377ccb57bb33
+            - API_KEY=1iEJOSA0OlrtYvBzAbbiHUDhxfLvrP6t8BlqbqLrGDyWmsiAoTFG14Mz5IAP
+            # [OPTIONAL] IP Address of the host to enable WebRTC e.g.,:
+            # - WB_IP=192.168.1.122
+            # WebUI and Stream authentication:
+            - WB_AUTH=False # Set to false to disable web and stream auth.
+            # WB_USERNAME=
+            # WB_PASSWORD=
+            - TZ=America/Mexico_City
+            - QUALITY=HD120
+            - RECORD_ALL=True
+            - RECORD_CAM_NAME=True
+            - RECORD_OTHER_CAM=True
+            - RECORD_PATH=/record/grabacion
+            - RECORD_FILE_NAME=%Y%m%d_%H_%M_%S
+            - RECORD_LENGTH=1800
+        volumes:
+            - ./record:/record/
+            

@@ -1,0 +1,14 @@
+services:
+  pyload:
+    image: lscr.io/linuxserver/pyload
+    container_name: pyload
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Mexico_City
+    volumes:
+      - ./config:/config
+      - /home/marco/jellyfin/movies:/downloads
+    ports:
+      - 8000:8000
+    restart: unless-stopped

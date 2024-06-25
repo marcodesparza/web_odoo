@@ -1,0 +1,12 @@
+services:
+  samba:
+    image: dockurr/samba
+    container_name: samba
+    environment:
+      USER: "marco"
+      PASS: "settoworld"
+    ports:
+      - 445:445
+    volumes:
+      - /home/marco/:/storage
+    restart: unless-stopped
