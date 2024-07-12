@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3030:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+
+  speedtest-exporter:
+    image: "billimek/prometheus-speedtest-exporter:latest"
+    container_name: speedtest-exporter
+    ports:
+      - "9798:9798"
+    environment:
+      - SPEEDTEST_INTERVAL=60  # Intervalo en segundos para ejecutar el test de velocidad
+      - TZ=Etc/UTC
+
+volumes:
+  grafana-data:
+  prometheus-data:
+
+networks:
+  default:
